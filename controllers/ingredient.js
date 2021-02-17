@@ -1,8 +1,8 @@
-const { Category, Ingredient } = require("../db/models");
+const { Category, Integrate } = require("../db/models");
 
 exports.fetchIngredient = async (ingredientid, next) => {
   try {
-    const ingredientFound = await Ingredient.findByPk(ingredientid);
+    const ingredientFound = await Integrate.findByPk(ingredientid);
     if (ingredientFound) return ingredientFound;
     else next({ message: "Ingredient does not exist" });
   } catch (error) {
@@ -13,7 +13,7 @@ exports.fetchIngredient = async (ingredientid, next) => {
 exports.ingredientList = async (req, res, next) => {
   console.log(req.body);
   try {
-    const ingredients = await Ingredient.findAll({
+    const ingredients = await Integrate.findAll({
       attributes: req.body,
       attributes: { exclude: ["updatedAt", "createdAt"] },
 

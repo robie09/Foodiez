@@ -5,7 +5,7 @@ const upload = require("../middleware/multer");
 
 router.param("categoryId", async (req, res, next, categoryId) => {
   console.log("hi");
-  const categoryFound = await controller.fetchcategoryId(categoryId, next);
+  const categoryFound = await controller.fetchCategory(categoryId, next);
   if (categoryFound) {
     req.category = categoryFound;
     console.log(req.category);
@@ -26,9 +26,9 @@ router.put("/:categoryId", upload.single("image"), controller.categoryUpdate);
 router.delete("/:categoryId", controller.categoryDelete);
 
 router.post(
-  "/:categoryId/products",
+  "/:categoryId/ingredient",
   upload.single("image"),
-  controller.recipeCreate
+  controller.ingredientCreate
 );
 
 module.exports = router;

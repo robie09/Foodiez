@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = 8000;
-db.sequelize.sync({ force: true });
+db.sequelize.sync({ alter: true });
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);
 });

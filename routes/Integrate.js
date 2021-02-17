@@ -6,10 +6,10 @@ const upload = require("../middleware/multer");
 router.param("ingredientId", async (req, res, next, ingredientId) => {
   const ingredientFound = await controller.fetchIngredient(ingredientId, next);
   if (ingredientFound) {
-    req.recipe = recipesFound;
+    req.ingredient = ingredientFound;
     next();
   } else {
-    const error = new Error("ingredient Not Found");
+    const error = new Error("Ingredient Not Found");
     error.status = 404;
     next(error);
   }

@@ -1,4 +1,4 @@
-const { Category, Ingredient } = require("../db/models");
+const { Category, Integrate } = require("../db/models");
 
 exports.fetchCategory = async (categoryId, next) => {
   console.log(categoryId);
@@ -6,18 +6,18 @@ exports.fetchCategory = async (categoryId, next) => {
   try {
     const categoryFound = await Category.findByPk(categoryId);
     if (categoryFound) return categoryFound;
-    else next({ message: "category does not exist" });
+    else next({ message: "Category does not exist" });
   } catch (error) {
     next(error);
   }
 };
 
-exports.recipeCreate = async (req, res, next) => {
+exports.ingredientCreate = async (req, res, next) => {
   try {
     req.body.categoryId = req.category.id;
     req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
 
-    const newIngredient = await Recipe.create(req.body);
+    const newIngredient = await Integrate.create(req.body);
     res.status(201).json(newIngredient);
   } catch (error) {
     next(error);
@@ -30,11 +30,11 @@ exports.categoryList = async (req, res, next) => {
       attributes: req.body,
       attributes: { exclude: ["updatedAt", "createdAt"] },
 
-      //   include: {
-      //     model: Ingredient,
-      //     as: "ingredient",
-      //     attributes: ["id"],
-      //   },
+      // include: {
+      //   model: Ingredient,
+      //   as: "ingredient",
+      //   attributes: ["id"],
+      // },
     });
     res.status(200).json(categories);
   } catch (error) {
@@ -46,7 +46,7 @@ exports.categoryCreate = async (req, res, next) => {
   try {
     // req.body.name = req.Category.name;
 
-    // req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
 
     const newCategory = await Category.create(req.body);
     res.status(201).json(newCategory);
