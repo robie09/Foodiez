@@ -43,10 +43,14 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Category.hasMany(db.Recipe, {
+db.Category.hasMany(db.Integrate, {
   foreignKey: "categoryId ",
-  as: "category",
+  as: "ingredient",
   allowNull: false,
 });
 
+db.Integrate.belongsTo(db.Category, {
+  foreignKey: "categoryId ",
+  as: "category",
+});
 module.exports = db;
