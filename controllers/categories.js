@@ -14,10 +14,12 @@ exports.fetchCategory = async (categoryId, next) => {
 
 exports.ingredientCreate = async (req, res, next) => {
   try {
+    console.log("id", req.category.id);
     req.body.categoryId = req.category.id;
     req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
-
+    console.log(req.body);
     const newIngredient = await Integrate.create(req.body);
+    console.log(newIngredient);
     res.status(201).json(newIngredient);
   } catch (error) {
     next(error);
@@ -30,11 +32,11 @@ exports.categoryList = async (req, res, next) => {
       attributes: req.body,
       attributes: { exclude: ["updatedAt", "createdAt"] },
 
-      // include: {
-      //   model: Ingredient,
-      //   as: "ingredient",
-      //   attributes: ["id"],
-      // },
+      include: {
+        model: Integrate,
+        as: "ingredient",
+        attributes: ["id"],
+      },
     });
     res.status(200).json(categories);
   } catch (error) {

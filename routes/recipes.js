@@ -4,7 +4,7 @@ const router = express.Router();
 const upload = require("../middleware/multer");
 
 router.param("recipeId", async (req, res, next, recipeId) => {
-  const recipesFound = await controller.fetchProduct(recipeId, next);
+  const recipesFound = await controller.fetchRecipe(recipeId, next);
   if (recipesFound) {
     req.recipe = recipesFound;
     next();

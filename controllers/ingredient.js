@@ -22,6 +22,11 @@ exports.ingredientList = async (req, res, next) => {
         as: "category",
         attributes: ["id"],
       },
+      include: {
+        model: Recipe, //we will have array of Recipes Id        as: "recipe",
+        attributes: ["id"],
+        through: { attributes: [] },
+      },
     });
     res.status(200).json(ingredients);
   } catch (error) {

@@ -44,13 +44,28 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.Category.hasMany(db.Integrate, {
-  foreignKey: "categoryId ",
+  foreignKey: "categoryId",
   as: "ingredient",
   allowNull: false,
 });
 
 db.Integrate.belongsTo(db.Category, {
-  foreignKey: "categoryId ",
+  foreignKey: "categoryId",
   as: "category",
 });
+//many to many relathions
+db.Integrate.belongsToMany(db.Recipe, { through: "Integrate_Recipe" });
+db.Recipe.belongsToMany(db.Integrate, { through: "Integrate_Recip" });
+
+const Integrate_Recip = sequelize.define(
+  "Integrate_Recip",
+  {
+    //"recipeId", "ingredientId"
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+  },
+  { timestamps: false }
+);
+
 module.exports = db;
