@@ -3,6 +3,11 @@ module.exports = (sequelize, DataTypes) => {
     name: {
       type: DataTypes.STRING,
     },
+
+    slug: {
+      type: DataTypes.STRING,
+      unique: true,
+    },
     quantity: {
       type: DataTypes.STRING,
     },
@@ -10,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
     },
+  });
+
+  SequelizeSlugify.slugifyModel(Recipe, {
+    source: ["name"],
   });
   return Recipe;
 };
