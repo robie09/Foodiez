@@ -45,7 +45,7 @@ db.Sequelize = Sequelize;
 
 db.Category.hasMany(db.Ingredient, {
   foreignKey: "categoryId",
-  as: "ingredient",
+  as: "ingredients",
   allowNull: false,
 });
 

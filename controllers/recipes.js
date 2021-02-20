@@ -46,15 +46,16 @@ exports.recipeCreate = async (req, res, next) => {
     console.log(req.body);
     req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     const newRecipe = await Recipe.create(req.body);
-    req.body.ingredientId = req.ingredient.id;
 
-    await newRecipe.addIngredients(req.body);
+    await newRecipe.addIngredients(req.body.ingredients);
 
     console.log(newRecipe);
-    console.log(req.body.ingredientId);
+    console.log(req.body.ingredients);
+    //console.log(req.body.ingredientId);
     console.log(req.body[2]);
     res.status(201).json({
-      newRecipe,
+      ...newRecipe.toJSON(),
+      ingredients: req.body.ingredients,
     });
   } catch (error) {
     next(error);
