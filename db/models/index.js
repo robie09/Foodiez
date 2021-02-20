@@ -43,29 +43,29 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.Category.hasMany(db.Integrate, {
+db.Category.hasMany(db.Ingredient, {
   foreignKey: "categoryId",
   as: "ingredient",
   allowNull: false,
 });
 
-db.Integrate.belongsTo(db.Category, {
+db.Ingredient.belongsTo(db.Category, {
   foreignKey: "categoryId",
   as: "category",
 });
 //many to many relathions
-db.Integrate.belongsToMany(db.Recipe, { through: "Integrate_Recipe" });
-db.Recipe.belongsToMany(db.Integrate, { through: "Integrate_Recip" });
+db.Ingredient.belongsToMany(db.Recipe, {
+  through: "RecipeIngredients ",
+  foreignKey: "ingredientId",
+  as: "recipes",
+});
+db.Recipe.belongsToMany(db.Ingredient, {
+  through: "RecipeIngredients ",
+  foreignKey: "recipeId",
+  as: "ingredients",
+});
 
-const Integrate_Recip = sequelize.define(
-  "Integrate_Recip",
-  {
-    //"recipeId", "ingredientId"
-    primaryKey: true,
-    autoIncrement: true,
-    allowNull: false,
-  },
-  { timestamps: false }
-);
+//create new model , and wen i will creat new recipe i have to connect the itegrate
+// const Integrate_Recip = sequelize.define(
 
 module.exports = db;

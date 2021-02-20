@@ -20,4 +20,6 @@ router.get("/:recipeId", controller.recipeDetail);
 router.put("/:recipeId", upload.single("image"), controller.recipeUpdate);
 router.delete("/:recipeId", controller.recipeDelete);
 
+router.post("/", upload.single("image"), controller.recipeCreate);
+
 module.exports = router;

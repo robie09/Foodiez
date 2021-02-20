@@ -1,4 +1,4 @@
-const { Category, Integrate } = require("../db/models");
+const { Category, Ingredient } = require("../db/models");
 
 exports.fetchCategory = async (categoryId, next) => {
   console.log(categoryId);
@@ -18,7 +18,7 @@ exports.ingredientCreate = async (req, res, next) => {
     req.body.categoryId = req.category.id;
     req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
     console.log(req.body);
-    const newIngredient = await Integrate.create(req.body);
+    const newIngredient = await Ingredient.create(req.body);
     console.log(newIngredient);
     res.status(201).json(newIngredient);
   } catch (error) {
@@ -33,7 +33,7 @@ exports.categoryList = async (req, res, next) => {
       attributes: { exclude: ["updatedAt", "createdAt"] },
 
       include: {
-        model: Integrate,
+        model: Ingredient,
         as: "ingredient",
         attributes: ["id"],
       },
@@ -46,8 +46,6 @@ exports.categoryList = async (req, res, next) => {
 
 exports.categoryCreate = async (req, res, next) => {
   try {
-    // req.body.name = req.Category.name;
-
     req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
 
     const newCategory = await Category.create(req.body);

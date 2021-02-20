@@ -5,7 +5,7 @@ const cors = require("cors");
 const db = require("./db/models");
 
 const categoryRoutes = require("./routes/categories");
-const ingredienteRoutes = require("./routes/integrate");
+const ingredientRoutes = require("./routes/ingredients");
 const RecipeRoutes = require("./routes/recipes");
 
 app.use(express.json());
@@ -13,8 +13,8 @@ app.use(cors());
 const path = require("path");
 
 app.use("/categories", categoryRoutes);
-app.use("/ingredient", ingredienteRoutes);
-app.use("/recipe", RecipeRoutes);
+app.use("/ingredients", ingredientRoutes);
+app.use("/recipes", RecipeRoutes);
 
 app.use("/media", express.static(path.join(__dirname, "media")));
 

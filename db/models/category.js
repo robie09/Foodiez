@@ -1,3 +1,5 @@
+const SequelizeSlugify = require("sequelize-slugify");
+
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define("Category", {
     name: {
@@ -13,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  SequelizeSlugify.slugifyModel(Integrate, {
+  SequelizeSlugify.slugifyModel(Category, {
     source: ["name"],
   });
   return Category;

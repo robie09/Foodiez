@@ -1,4 +1,10 @@
-const { Integrate, Recipe } = require("../db/models");
+const db = require("../db/models/");
+const {
+  Ingredient,
+  Recipe,
+  RecipeIngredients,
+  Category,
+} = require("../db/models");
 
 exports.fetchRecipe = async (recipeId, next) => {
   try {
@@ -17,20 +23,46 @@ exports.recipeList = async (req, res, next) => {
       attributes: req.body,
       attributes: { exclude: ["updatedAt", "createdAt"] },
 
-      include: {
-        model: Integrate, //we will have array of Integrate Id
-        attributes: ["id"],
-        through: { attributes: [] },
-      },
+      include: [
+        {
+          model: Ingredient,
+          through: {
+            attributes: [],
+          },
+          as: "ingredients",
+          attributes: ["id"],
+        },
+      ],
     });
+
     res.status(200).json(recipes);
   } catch (error) {
     next(error);
   }
 };
 
+exports.recipeCreate = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    req.body.image = `http://${req.get("host")}/media/${req.file.filename}`;
+    const newRecipe = await Recipe.create(req.body);
+    req.body.ingredientId = req.ingredient.id;
+
+    await newRecipe.addIngredients(req.body);
+
+    console.log(newRecipe);
+    console.log(req.body.ingredientId);
+    console.log(req.body[2]);
+    res.status(201).json({
+      newRecipe,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.recipeDetail = async (req, res, next) => {
-  res.status(200).json(req.product);
+  res.status(200).json(req.recipe);
 };
 
 exports.recipeUpdate = async (req, res, next) => {

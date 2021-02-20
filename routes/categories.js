@@ -26,7 +26,7 @@ router.put("/:categoryId", upload.single("image"), controller.categoryUpdate);
 router.delete("/:categoryId", controller.categoryDelete);
 
 router.post(
-  "/:categoryId/ingredient",
+  "/:categoryId/ingredients",
   upload.single("image"),
   controller.ingredientCreate
 );

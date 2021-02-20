@@ -1,5 +1,5 @@
 const express = require("express");
-const controller = require("../controllers/ingredient");
+const controller = require("../controllers/ingredients");
 const router = express.Router();
 const upload = require("../middleware/multer");
 

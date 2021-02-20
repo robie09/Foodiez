@@ -1,5 +1,7 @@
+const SequelizeSlugify = require("sequelize-slugify");
+
 module.exports = (sequelize, DataTypes) => {
-  const Integrate = sequelize.define("Integrate", {
+  const Ingredient = sequelize.define("Ingredient", {
     name: {
       type: DataTypes.STRING,
     },
@@ -13,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  SequelizeSlugify.slugifyModel(Integrate, {
+  SequelizeSlugify.slugifyModel(Ingredient, {
     source: ["name"],
   });
-  return Integrate;
+  return Ingredient;
 };

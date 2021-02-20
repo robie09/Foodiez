@@ -1,8 +1,8 @@
-const { Category, Integrate } = require("../db/models");
+const { Category, Ingredient, Recipe } = require("../db/models");
 
-exports.fetchIngredient = async (ingredientid, next) => {
+exports.fetchIngredient = async (ingredientId, next) => {
   try {
-    const ingredientFound = await Integrate.findByPk(ingredientid);
+    const ingredientFound = await Ingredient.findByPk(ingredientId);
     if (ingredientFound) return ingredientFound;
     else next({ message: "Ingredient does not exist" });
   } catch (error) {
@@ -13,7 +13,7 @@ exports.fetchIngredient = async (ingredientid, next) => {
 exports.ingredientList = async (req, res, next) => {
   console.log(req.body);
   try {
-    const ingredients = await Integrate.findAll({
+    const ingredients = await Ingredient.findAll({
       attributes: req.body,
       attributes: { exclude: ["updatedAt", "createdAt"] },
 
@@ -22,11 +22,17 @@ exports.ingredientList = async (req, res, next) => {
         as: "category",
         attributes: ["id"],
       },
-      include: {
-        model: Recipe, //we will have array of Recipes Id        as: "recipe",
-        attributes: ["id"],
-        through: { attributes: [] },
-      },
+
+      include: [
+        {
+          model: Recipe,
+          through: {
+            attributes: [],
+          },
+          as: "recipes",
+          attributes: ["id"],
+        },
+      ],
     });
     res.status(200).json(ingredients);
   } catch (error) {
